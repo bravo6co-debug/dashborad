@@ -62,7 +62,7 @@ export function AgentDashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-24">
       {/* 1. 캠페인 섹션 */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -147,10 +147,6 @@ export function AgentDashboard() {
             <Button variant="outline" size="sm">
               <Search className="h-4 w-4 mr-2" />
               검색
-            </Button>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-2" />
-              내보내기
             </Button>
           </div>
         </div>

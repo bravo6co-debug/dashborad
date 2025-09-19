@@ -222,7 +222,7 @@ export function DealerManagement() {
       </Card>
 
       {/* Additional Management Options */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="p-4">
           <h3 className="mb-2">총 대리점 수</h3>
           <p className="text-2xl">{dealers.length}</p>
@@ -234,10 +234,6 @@ export function DealerManagement() {
         <Card className="p-4">
           <h3 className="mb-2">정지된 대리점</h3>
           <p className="text-2xl">{dealers.filter(d => d.status === 'inactive').length}</p>
-        </Card>
-        <Card className="p-4">
-          <h3 className="mb-2">총 잔액</h3>
-          <p className="text-2xl">₩{dealers.reduce((sum, d) => sum + parseInt(d.balance.replace(/[₩,]/g, '')), 0).toLocaleString()}</p>
         </Card>
       </div>
     </div>

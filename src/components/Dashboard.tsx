@@ -71,7 +71,7 @@ export function Dashboard() {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-24">
       {/* 1. 캠페인 섹션 */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -94,7 +94,7 @@ export function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {campaignStats.map((stat, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardContent className="flex items-center p-6">
+              <CardContent className="flex items-center p-6 mb-4">
                 <div className="flex items-center gap-4">
                   <div className={`p-3 rounded-full ${stat.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
@@ -162,10 +162,6 @@ export function Dashboard() {
                 className="pl-10 w-72"
               />
             </div>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-2" />
-              내보내기
-            </Button>
           </div>
         </div>
 
