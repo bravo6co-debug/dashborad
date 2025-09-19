@@ -2,47 +2,38 @@ import { useState } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
-import { CalendarDays, ChevronDown } from 'lucide-react';
+import { CalendarDays, ChevronDown, Plus } from 'lucide-react';
 
 export function AgentSettlement() {
   const [selectedMonth, setSelectedMonth] = useState('2025년 9월');
   
-  const monthlySettlement = {
-    deposit: '15,000,000',
-    usage: '8,500,000', 
-    balance: '6,500,000'
+  const balanceStatus = {
+    companyDeposit: '10,000,000',
+    dealerCharge: '7,500,000',
+    availableBalance: '2,500,000'
   };
 
-  const dealerDetails = [
+  const dealerChargeDetails = [
     {
-      name: '강남대리점',
-      deposit: '3,000,000',
-      usage: '2,500,000',
-      balance: '500,000'
+      name: 'A마트',
+      totalCharge: '3,000,000',
+      campaignUsage: '1,800,000',
+      currentBalance: '1,200,000',
+      lastChargeDate: '2024.01.15 14:30'
     },
     {
-      name: '부산대리점', 
-      deposit: '2,500,000',
-      usage: '1,800,000',
-      balance: '700,000'
+      name: 'B스토어',
+      totalCharge: '2,500,000',
+      campaignUsage: '2,000,000',
+      currentBalance: '500,000',
+      lastChargeDate: '2024.01.14 09:20'
     },
     {
-      name: '대구대리점',
-      deposit: '2,800,000',
-      usage: '2,200,000',
-      balance: '600,000'
-    },
-    {
-      name: '인천대리점',
-      deposit: '2,200,000',
-      usage: '1,500,000',
-      balance: '700,000'
-    },
-    {
-      name: '광주대리점',
-      deposit: '4,500,000',
-      usage: '500,000',
-      balance: '4,000,000'
+      name: 'C샵',
+      totalCharge: '2,000,000',
+      campaignUsage: '1,700,000',
+      currentBalance: '300,000',
+      lastChargeDate: '2024.01.13 16:45'
     }
   ];
 
@@ -53,62 +44,66 @@ export function AgentSettlement() {
         <h1 className="text-xl">총판 정산관리</h1>
       </div>
 
-      {/* Month Selection */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">{selectedMonth}</span>
-          <Button variant="ghost" size="sm">
-            <ChevronDown className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <CalendarDays className="h-4 w-4" />
-          <span>DatePicker</span>
-        </div>
-      </div>
 
-      {/* Monthly Settlement Summary */}
-      <Card>
-        <CardContent className="p-0">
+      {/* 총판 잔액 현황 */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl">💰 총판 잔액 현황</h2>
+          <div className="flex items-center gap-2">
+            <span className="text-lg">{selectedMonth}</span>
+            <Button variant="ghost" size="sm">
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CalendarDays className="h-4 w-4" />
+              <span>DatePicker</span>
+            </div>
+          </div>
+        </div>
+        <Card>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="bg-muted">총입금액</TableHead>
-                <TableHead className="bg-muted">사용금액</TableHead>
-                <TableHead className="bg-muted">남은금액</TableHead>
+                <TableHead className="bg-muted">본사 입금 총액</TableHead>
+                <TableHead className="bg-muted">대리점 충전 총액</TableHead>
+                <TableHead className="bg-muted">충전 가능 잔액</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="text-lg">{monthlySettlement.deposit}</TableCell>
-                <TableCell className="text-lg">{monthlySettlement.usage}</TableCell>
-                <TableCell className="text-lg">{monthlySettlement.balance}</TableCell>
+                <TableCell className="text-lg font-semibold">₩{balanceStatus.companyDeposit}</TableCell>
+                <TableCell className="text-lg font-semibold">₩{balanceStatus.dealerCharge}</TableCell>
+                <TableCell className="text-lg font-semibold text-blue-600">₩{balanceStatus.availableBalance}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
+        </Card>
+      </div>
 
-      {/* Dealer Details */}
+      {/* 대리점 충전 현황 */}
       <div>
-        <h2 className="mb-4">대리점별 세부내역</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl">대리점 충전 현황</h2>
+        </div>
         <Card>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="bg-muted w-32">대리점명</TableHead>
-                <TableHead className="bg-muted">입금금액</TableHead>
-                <TableHead className="bg-muted">사용금액</TableHead>
-                <TableHead className="bg-muted">남은금액</TableHead>
+                <TableHead className="bg-muted">누적 충전금액</TableHead>
+                <TableHead className="bg-muted">캠페인사용금액</TableHead>
+                <TableHead className="bg-muted">현재 잔액</TableHead>
+                <TableHead className="bg-muted">최근 충전일</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dealerDetails.map((dealer, index) => (
+              {dealerChargeDetails.map((dealer, index) => (
                 <TableRow key={index}>
-                  <TableCell className="bg-muted/50">{dealer.name}</TableCell>
-                  <TableCell>{dealer.deposit}</TableCell>
-                  <TableCell>{dealer.usage}</TableCell>
-                  <TableCell>{dealer.balance}</TableCell>
+                  <TableCell className="bg-muted/50 font-medium">{dealer.name}</TableCell>
+                  <TableCell className="font-semibold">₩{dealer.totalCharge}</TableCell>
+                  <TableCell className="text-red-600">₩{dealer.campaignUsage}</TableCell>
+                  <TableCell className="text-green-600 font-semibold">₩{dealer.currentBalance}</TableCell>
+                  <TableCell className="text-muted-foreground">{dealer.lastChargeDate}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

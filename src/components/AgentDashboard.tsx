@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Badge } from './ui/badge';
-import { Calendar, Download, BarChart3, Users, TrendingUp, Award, CalendarDays } from 'lucide-react';
+import { Calendar, Download, BarChart3, Users, TrendingUp, Award, CalendarDays, Search, FileText } from 'lucide-react';
 
 export function AgentDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('주별');
@@ -62,36 +62,37 @@ export function AgentDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
-
-      {/* Period Selection */}
-      <div className="flex gap-2">
-        {periodOptions.map((option) => (
-          <Button
-            key={option.value}
-            variant={selectedPeriod === option.value ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedPeriod(option.value)}
-            className="flex flex-col items-center h-auto py-2 px-4"
-          >
-            <span className="text-sm">{option.label}</span>
-            <span className="text-xs opacity-70">{option.date}</span>
-          </Button>
-        ))}
-      </div>
-
-      {/* Campaign Stats */}
-      <div>
-        <h2 className="mb-4">캠페인 (전일 24시 기준)</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="space-y-8">
+      {/* 1. 캠페인 섹션 */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">📊 캠페인 (전일 24시 기준)</h2>
+          <div className="flex gap-2">
+            {periodOptions.map((option) => (
+              <Button
+                key={option.value}
+                variant={selectedPeriod === option.value ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedPeriod(option.value)}
+                className="flex flex-col items-center h-auto py-2 px-3"
+              >
+                <span className="text-xs">{option.label}</span>
+                <span className="text-xs opacity-70">{option.date}</span>
+              </Button>
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {campaignStats.map((stat, index) => (
-            <Card key={index}>
-              <CardContent className="flex items-center p-4">
-                <div className="flex items-center gap-3">
-                  <stat.icon className={`h-5 w-5 ${stat.color}`} />
+            <Card key={index} className="hover:shadow-md transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-full ${stat.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
+                    <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  </div>
                   <div>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
-                    <p className="text-2xl">{stat.value}</p>
+                    <p className="text-3xl font-bold">{stat.value}</p>
                   </div>
                 </div>
               </CardContent>
@@ -100,18 +101,36 @@ export function AgentDashboard() {
         </div>
       </div>
 
-      {/* Housing Stats */}
-      <div>
-        <h2 className="mb-4">발주 (전일 24시 기준)</h2>
+      {/* 2. 발주 섹션 */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">📦 발주 (전일 24시 기준)</h2>
+          <div className="flex gap-2">
+            {periodOptions.map((option) => (
+              <Button
+                key={`housing-${option.value}`}
+                variant={selectedPeriod === option.value ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedPeriod(option.value)}
+                className="flex flex-col items-center h-auto py-2 px-3"
+              >
+                <span className="text-xs">{option.label}</span>
+                <span className="text-xs opacity-70">{option.date}</span>
+              </Button>
+            ))}
+          </div>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           {housingStats.map((stat, index) => (
-            <Card key={index}>
-              <CardContent className="flex items-center p-4">
-                <div className="flex items-center gap-3">
-                  <stat.icon className={`h-5 w-5 ${stat.color}`} />
+            <Card key={index} className="hover:shadow-md transition-shadow">
+              <CardContent className="flex items-center p-6">
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-full ${stat.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
+                    <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  </div>
                   <div>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
-                    <p className="text-2xl">{stat.value}</p>
+                    <p className="text-3xl font-bold">{stat.value}</p>
                   </div>
                 </div>
               </CardContent>
@@ -120,52 +139,63 @@ export function AgentDashboard() {
         </div>
       </div>
 
-      {/* Campaign Report Table */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2>캠페인 별 보고서</h2>
-          <Button variant="outline" size="sm">
-            검색
-          </Button>
+      {/* 3. 캠페인 별 보고서 섹션 */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">📋 캠페인 별 보고서</h2>
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm">
+              <Search className="h-4 w-4 mr-2" />
+              검색
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              내보내기
+            </Button>
+          </div>
         </div>
 
-        <Card>
+        <Card className="overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>캠페인명</TableHead>
-                <TableHead>시작일</TableHead>
-                <TableHead>종료일</TableHead>
-                <TableHead>수행률</TableHead>
-                <TableHead>상태</TableHead>
-                <TableHead>보고서</TableHead>
+              <TableRow className="bg-muted/50">
+                <TableHead className="font-semibold">캠페인명</TableHead>
+                <TableHead className="font-semibold">시작일</TableHead>
+                <TableHead className="font-semibold">종료일</TableHead>
+                <TableHead className="font-semibold">수행률</TableHead>
+                <TableHead className="font-semibold">상태</TableHead>
+                <TableHead className="font-semibold">보고서</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {campaigns.map((campaign, index) => (
-                <TableRow key={index}>
-                  <TableCell>{campaign.name}</TableCell>
-                  <TableCell>{campaign.startDate}</TableCell>
-                  <TableCell>{campaign.endDate}</TableCell>
+                <TableRow key={index} className="hover:bg-muted/30">
+                  <TableCell className="font-medium">{campaign.name}</TableCell>
+                  <TableCell className="text-muted-foreground">{campaign.startDate}</TableCell>
+                  <TableCell className="text-muted-foreground">{campaign.endDate}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <span>{campaign.progress}%</span>
-                      <div className="w-16 h-2 bg-gray-200 rounded-full">
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium">{campaign.progress}%</span>
+                      <div className="w-20 h-2 bg-gray-200 rounded-full">
                         <div 
-                          className={`h-full ${campaign.statusColor} rounded-full`}
+                          className={`h-full ${campaign.statusColor} rounded-full transition-all duration-300`}
                           style={{ width: `${campaign.progress}%` }}
                         />
                       </div>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={campaign.status === '완료' ? 'default' : 'secondary'}>
+                    <Badge 
+                      variant={campaign.status === '완료' ? 'default' : 'secondary'}
+                      className={campaign.status === '완료' ? 'bg-green-100 text-green-800' : ''}
+                    >
                       {campaign.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Button variant="outline" size="sm">
-                      클릭
+                    <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground">
+                      <FileText className="h-4 w-4 mr-1" />
+                      보고서
                     </Button>
                   </TableCell>
                 </TableRow>
