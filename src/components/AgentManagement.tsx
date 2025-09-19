@@ -40,7 +40,7 @@ export function AgentManagement() {
 
   const agents = [
     {
-      name: '서울총판 (A등급)',
+      name: '서울총판',
       commission: '₩1,500',
       totalAmount: '₩10,000,000',
       settlementAmount: '₩3,500,000',
@@ -48,7 +48,7 @@ export function AgentManagement() {
       status: 'active'
     },
     {
-      name: '부산총판 (B등급)', 
+      name: '부산총판', 
       commission: '₩1,200',
       totalAmount: '₩6,000,000',
       settlementAmount: '₩2,100,000',
@@ -56,7 +56,7 @@ export function AgentManagement() {
       status: 'active'
     },
     {
-      name: '대구총판 (C등급)',
+      name: '대구총판',
       commission: '₩1,800', 
       totalAmount: '₩8,000,000',
       settlementAmount: '₩7,500,000',
@@ -64,7 +64,7 @@ export function AgentManagement() {
       status: 'active'
     },
     {
-      name: '광주총판 (E등급)',
+      name: '광주총판',
       commission: '₩2,000',
       totalAmount: '₩15,000,000', 
       settlementAmount: '₩5,000,000',
@@ -181,12 +181,7 @@ export function AgentManagement() {
             {agents.map((agent, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <div className="flex items-center gap-2">
-                    <span>{agent.name}</span>
-                    <Badge variant={agent.status === 'active' ? 'default' : 'secondary'}>
-                      {agent.status === 'active' ? '활성' : '정지'}
-                    </Badge>
-                  </div>
+                  <span>{agent.name}</span>
                 </TableCell>
                 <TableCell>{agent.commission}</TableCell>
                 <TableCell>{agent.totalAmount}</TableCell>

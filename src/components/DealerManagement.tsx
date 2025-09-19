@@ -40,35 +40,35 @@ export function DealerManagement() {
 
   const dealers = [
     {
-      name: '강남대리점 (A등급)',
+      name: '강남대리점',
       totalAmount: '₩8,000,000',
       settlementAmount: '₩2,800,000',
       balance: '₩5,200,000',
       status: 'active'
     },
     {
-      name: '부산대리점 (B등급)', 
+      name: '부산대리점', 
       totalAmount: '₩5,000,000',
       settlementAmount: '₩1,800,000',
       balance: '₩3,200,000',
       status: 'active'
     },
     {
-      name: '대구대리점 (C등급)',
+      name: '대구대리점',
       totalAmount: '₩6,500,000',
       settlementAmount: '₩6,000,000',
       balance: '₩500,000',
       status: 'active'
     },
     {
-      name: '광주대리점 (E등급)',
+      name: '광주대리점',
       totalAmount: '₩12,000,000', 
       settlementAmount: '₩4,000,000',
       balance: '₩8,000,000',
       status: 'inactive'
     },
     {
-      name: '인천대리점 (A등급)',
+      name: '인천대리점',
       totalAmount: '₩7,500,000', 
       settlementAmount: '₩3,200,000',
       balance: '₩4,300,000',
@@ -183,12 +183,7 @@ export function DealerManagement() {
             {dealers.map((dealer, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <div className="flex items-center gap-2">
-                    <span>{dealer.name}</span>
-                    <Badge variant={dealer.status === 'active' ? 'default' : 'secondary'}>
-                      {dealer.status === 'active' ? '활성' : '정지'}
-                    </Badge>
-                  </div>
+                  <span>{dealer.name}</span>
                 </TableCell>
                 <TableCell>{dealer.totalAmount}</TableCell>
                 <TableCell>{dealer.settlementAmount}</TableCell>

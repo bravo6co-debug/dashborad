@@ -90,7 +90,7 @@ export function AgentSettlement() {
             <TableHeader>
               <TableRow>
                 <TableHead className="bg-muted w-32">대리점명</TableHead>
-                <TableHead className="bg-muted">누적 충전금액</TableHead>
+                <TableHead className="bg-muted">충전금액</TableHead>
                 <TableHead className="bg-muted">캠페인사용금액</TableHead>
                 <TableHead className="bg-muted">현재 잔액</TableHead>
                 <TableHead className="bg-muted">최근 충전일</TableHead>

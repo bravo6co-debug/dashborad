@@ -8,9 +8,9 @@ export function SettlementManagement() {
   const [selectedMonth, setSelectedMonth] = useState('2025년 9월');
   
   const monthlySettlement = {
-    deposit: '10,000,000',
-    usage: '2,500,000', 
-    balance: '7,500,000'
+    deposit: '2,500,000',
+    usage: '1,600,000', 
+    balance: '900,000'
   };
 
   const agentDetails = [
