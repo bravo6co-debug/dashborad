@@ -1,10 +1,43 @@
+import { useState } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Badge } from './ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { FileText, Settings, Edit, Plus } from 'lucide-react';
 
 export function AgentManagement() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newAgent, setNewAgent] = useState({
+    name: '',
+    id: '',
+    password: '',
+    commission: '',
+    deposit: ''
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setNewAgent(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = () => {
+    // 여기에 새 총판 생성 로직 추가
+    console.log('새 총판 생성:', newAgent);
+    setIsDialogOpen(false);
+    setNewAgent({
+      name: '',
+      id: '',
+      password: '',
+      commission: '',
+      deposit: ''
+    });
+  };
+
   const agents = [
     {
       name: '서울총판 (A등급)',
@@ -44,11 +77,91 @@ export function AgentManagement() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl">총판 관리</h1>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          새 총판 생성
-        </Button>
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl">총판 관리</h1>
+          <Button onClick={() => setIsDialogOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            새 총판 생성
+          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>새 총판 생성</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    총판명
+                  </Label>
+                  <Input
+                    id="name"
+                    value={newAgent.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: 서울총판 (A등급)"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="id" className="text-right">
+                    아이디
+                  </Label>
+                  <Input
+                    id="id"
+                    value={newAgent.id}
+                    onChange={(e) => handleInputChange('id', e.target.value)}
+                    className="col-span-3"
+                    placeholder="아이디를 입력하세요"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-right">
+                    패스워드
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={newAgent.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className="col-span-3"
+                    placeholder="패스워드를 입력하세요"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="commission" className="text-right">
+                    단가
+                  </Label>
+                  <Input
+                    id="commission"
+                    value={newAgent.commission}
+                    onChange={(e) => handleInputChange('commission', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: ₩1,500"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="deposit" className="text-right">
+                    입금액
+                  </Label>
+                  <Input
+                    id="deposit"
+                    value={newAgent.deposit}
+                    onChange={(e) => handleInputChange('deposit', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: ₩10,000,000"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  취소
+                </Button>
+                <Button onClick={handleSubmit}>
+                  생성
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Agent Table */}
