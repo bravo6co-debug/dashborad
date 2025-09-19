@@ -73,7 +73,7 @@ export function AgentSettlement() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="bg-muted">총입금액(누적)</TableHead>
+                <TableHead className="bg-muted">총입금액</TableHead>
                 <TableHead className="bg-muted">사용금액</TableHead>
                 <TableHead className="bg-muted">남은금액</TableHead>
               </TableRow>

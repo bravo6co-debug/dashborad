@@ -44,40 +44,35 @@ export function DealerManagement() {
       totalAmount: '₩8,000,000',
       settlementAmount: '₩2,800,000',
       balance: '₩5,200,000',
-      status: 'active',
-      agent: '서울총판'
+      status: 'active'
     },
     {
       name: '부산대리점 (B등급)', 
       totalAmount: '₩5,000,000',
       settlementAmount: '₩1,800,000',
       balance: '₩3,200,000',
-      status: 'active',
-      agent: '부산총판'
+      status: 'active'
     },
     {
       name: '대구대리점 (C등급)',
       totalAmount: '₩6,500,000',
       settlementAmount: '₩6,000,000',
       balance: '₩500,000',
-      status: 'active',
-      agent: '대구총판'
+      status: 'active'
     },
     {
       name: '광주대리점 (E등급)',
       totalAmount: '₩12,000,000', 
       settlementAmount: '₩4,000,000',
       balance: '₩8,000,000',
-      status: 'inactive',
-      agent: '광주총판'
+      status: 'inactive'
     },
     {
       name: '인천대리점 (A등급)',
       totalAmount: '₩7,500,000', 
       settlementAmount: '₩3,200,000',
       balance: '₩4,300,000',
-      status: 'active',
-      agent: '서울총판'
+      status: 'active'
     }
   ];
 
@@ -178,7 +173,6 @@ export function DealerManagement() {
           <TableHeader>
             <TableRow>
               <TableHead>대리점명</TableHead>
-              <TableHead>소속총판</TableHead>
               <TableHead>총입금액(누적)</TableHead>
               <TableHead>집행된금액</TableHead>
               <TableHead>남은 금액</TableHead>
@@ -195,11 +189,6 @@ export function DealerManagement() {
                       {dealer.status === 'active' ? '활성' : '정지'}
                     </Badge>
                   </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline">
-                    {dealer.agent}
-                  </Badge>
                 </TableCell>
                 <TableCell>{dealer.totalAmount}</TableCell>
                 <TableCell>{dealer.settlementAmount}</TableCell>
@@ -247,8 +236,8 @@ export function DealerManagement() {
           <p className="text-2xl">{dealers.filter(d => d.status === 'inactive').length}</p>
         </Card>
         <Card className="p-4">
-          <h3 className="mb-2">총판별 대리점</h3>
-          <p className="text-2xl">{new Set(dealers.map(d => d.agent)).size}</p>
+          <h3 className="mb-2">총 잔액</h3>
+          <p className="text-2xl">₩{dealers.reduce((sum, d) => sum + parseInt(d.balance.replace(/[₩,]/g, '')), 0).toLocaleString()}</p>
         </Card>
       </div>
     </div>
