@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { AgentManagement } from './components/AgentManagement';
-import { DealerManagement } from './components/DealerManagement';
+import { AgentPage } from './components/AgentPage';
 import { SettlementManagement } from './components/SettlementManagement';
 
 export default function App() {
@@ -14,6 +14,8 @@ export default function App() {
         return <Dashboard />;
       case 'agents':
         return <AgentManagement />;
+      case 'agent-page':
+        return <AgentPage />;
       case 'settlement':
         return <SettlementManagement />;
       default:

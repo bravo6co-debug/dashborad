@@ -77,13 +77,15 @@ export function AgentManagement() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1 className="text-xl">총판 관리</h1>
-          <Button onClick={() => setIsDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            새 총판 생성
-          </Button>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <h1 className="text-xl">총판 관리</h1>
+        <Button onClick={() => setIsDialogOpen(true)}>
+          <Plus className="h-4 w-4 mr-2" />
+          새 총판 생성
+        </Button>
+      </div>
+
+      {/* Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>새 총판 생성</DialogTitle>
@@ -160,9 +162,7 @@ export function AgentManagement() {
                 </Button>
               </div>
             </DialogContent>
-          </Dialog>
-        </div>
-      </div>
+      </Dialog>
 
       {/* Agent Table */}
       <Card>

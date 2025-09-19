@@ -1,14 +1,46 @@
+import { useState } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Badge } from './ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { FileText, Settings, Edit, Plus } from 'lucide-react';
 
 export function DealerManagement() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newDealer, setNewDealer] = useState({
+    name: '',
+    id: '',
+    password: '',
+    commission: '',
+    deposit: ''
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setNewDealer(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = () => {
+    // 여기에 새 대리점 생성 로직 추가
+    console.log('새 대리점 생성:', newDealer);
+    setIsDialogOpen(false);
+    setNewDealer({
+      name: '',
+      id: '',
+      password: '',
+      commission: '',
+      deposit: ''
+    });
+  };
+
   const dealers = [
     {
       name: '강남대리점 (A등급)',
-      commission: '₩1,200',
       totalAmount: '₩8,000,000',
       settlementAmount: '₩2,800,000',
       balance: '₩5,200,000',
@@ -17,7 +49,6 @@ export function DealerManagement() {
     },
     {
       name: '부산대리점 (B등급)', 
-      commission: '₩1,000',
       totalAmount: '₩5,000,000',
       settlementAmount: '₩1,800,000',
       balance: '₩3,200,000',
@@ -26,7 +57,6 @@ export function DealerManagement() {
     },
     {
       name: '대구대리점 (C등급)',
-      commission: '₩1,400', 
       totalAmount: '₩6,500,000',
       settlementAmount: '₩6,000,000',
       balance: '₩500,000',
@@ -35,7 +65,6 @@ export function DealerManagement() {
     },
     {
       name: '광주대리점 (E등급)',
-      commission: '₩1,600',
       totalAmount: '₩12,000,000', 
       settlementAmount: '₩4,000,000',
       balance: '₩8,000,000',
@@ -44,7 +73,6 @@ export function DealerManagement() {
     },
     {
       name: '인천대리점 (A등급)',
-      commission: '₩1,100',
       totalAmount: '₩7,500,000', 
       settlementAmount: '₩3,200,000',
       balance: '₩4,300,000',
@@ -58,11 +86,91 @@ export function DealerManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl">대리점 관리</h1>
-        <Button>
+        <Button onClick={() => setIsDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
           새 대리점 생성
         </Button>
       </div>
+
+      {/* Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>새 대리점 생성</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    대리점명
+                  </Label>
+                  <Input
+                    id="name"
+                    value={newDealer.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: 강남대리점 (A등급)"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="id" className="text-right">
+                    아이디
+                  </Label>
+                  <Input
+                    id="id"
+                    value={newDealer.id}
+                    onChange={(e) => handleInputChange('id', e.target.value)}
+                    className="col-span-3"
+                    placeholder="아이디를 입력하세요"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-right">
+                    패스워드
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={newDealer.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className="col-span-3"
+                    placeholder="패스워드를 입력하세요"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="commission" className="text-right">
+                    단가
+                  </Label>
+                  <Input
+                    id="commission"
+                    value={newDealer.commission}
+                    onChange={(e) => handleInputChange('commission', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: ₩1,200"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="deposit" className="text-right">
+                    입금액
+                  </Label>
+                  <Input
+                    id="deposit"
+                    value={newDealer.deposit}
+                    onChange={(e) => handleInputChange('deposit', e.target.value)}
+                    className="col-span-3"
+                    placeholder="예: ₩8,000,000"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  취소
+                </Button>
+                <Button onClick={handleSubmit}>
+                  생성
+                </Button>
+              </div>
+            </DialogContent>
+      </Dialog>
 
       {/* Dealer Table */}
       <Card>
@@ -71,7 +179,6 @@ export function DealerManagement() {
             <TableRow>
               <TableHead>대리점명</TableHead>
               <TableHead>소속총판</TableHead>
-              <TableHead>개별단가</TableHead>
               <TableHead>총입금액(누적)</TableHead>
               <TableHead>집행된금액</TableHead>
               <TableHead>남은 금액</TableHead>
@@ -94,7 +201,6 @@ export function DealerManagement() {
                     {dealer.agent}
                   </Badge>
                 </TableCell>
-                <TableCell>{dealer.commission}</TableCell>
                 <TableCell>{dealer.totalAmount}</TableCell>
                 <TableCell>{dealer.settlementAmount}</TableCell>
                 <TableCell>{dealer.balance}</TableCell>

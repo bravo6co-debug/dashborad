@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from './ui/button';
-import { BarChart3, Users, Calculator } from 'lucide-react';
+import { BarChart3, Users, Calculator, Building2 } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
@@ -11,7 +11,8 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   const menuItems = [
     { id: 'dashboard', label: '대시보드', icon: BarChart3 },
     { id: 'agents', label: '총판관리', icon: Users },
-    { id: 'settlement', label: '정산관리', icon: Calculator }
+    { id: 'settlement', label: '정산관리', icon: Calculator },
+    { id: 'agent-page', label: '총판용 페이지', icon: Building2 }
   ];
 
   return (

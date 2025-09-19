@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { Input } from './ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Badge } from './ui/badge';
-import { Calendar, Download, BarChart3, Users, TrendingUp, Award, CalendarDays, Search } from 'lucide-react';
+import { Calendar, Download, BarChart3, Users, TrendingUp, Award, CalendarDays } from 'lucide-react';
 
-export function Dashboard() {
+export function AgentDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState('주별');
   const [selectedDate, setSelectedDate] = useState('2024-09-19');
-  const [searchTerm, setSearchTerm] = useState('');
 
   const periodOptions = [
     { label: '주별', value: '주별', date: '09.13 - 09.19' },
@@ -25,9 +23,7 @@ export function Dashboard() {
 
   const housingStats = [
     { label: '발주건수', value: '700', icon: BarChart3, color: 'text-gray-600' },
-    { label: '리워드요청수', value: '520', icon: Users, color: 'text-purple-600' },
-    { label: '승인수', value: '492', icon: TrendingUp, color: 'text-blue-600' },
-    { label: '승인률', value: '95%', icon: Award, color: 'text-green-600' }
+    { label: '승인수', value: '492', icon: TrendingUp, color: 'text-blue-600' }
   ];
 
   const campaigns = [
@@ -65,14 +61,8 @@ export function Dashboard() {
     }
   ];
 
-  // 검색어에 따라 캠페인 필터링
-  const filteredCampaigns = campaigns.filter(campaign =>
-    campaign.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
     <div className="space-y-6">
-
 
       {/* Period Selection */}
       <div className="flex gap-2">
@@ -113,7 +103,7 @@ export function Dashboard() {
       {/* Housing Stats */}
       <div>
         <h2 className="mb-4">발주 (전일 24시 기준)</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           {housingStats.map((stat, index) => (
             <Card key={index}>
               <CardContent className="flex items-center p-4">
@@ -134,17 +124,9 @@ export function Dashboard() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2>캠페인 별 보고서</h2>
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="캠페인명으로 검색..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8 w-64"
-              />
-            </div>
-          </div>
+          <Button variant="outline" size="sm">
+            검색
+          </Button>
         </div>
 
         <Card>
@@ -160,7 +142,7 @@ export function Dashboard() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCampaigns.map((campaign, index) => (
+              {campaigns.map((campaign, index) => (
                 <TableRow key={index}>
                   <TableCell>{campaign.name}</TableCell>
                   <TableCell>{campaign.startDate}</TableCell>
